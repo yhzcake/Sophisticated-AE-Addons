@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
+@SuppressWarnings("null")
 public final class UpgradeToolScreen extends AbstractContainerScreen<UpgradeToolMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("sophisticated_ae_addons", "textures/gui/upgrade_tool.png");
 

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
+@SuppressWarnings("null")
 public final class AeUpgradeInventoryHandler implements ITrackedContentsItemHandler {
     private final IStorageWrapper storageWrapper;
     private final ITrackedContentsItemHandler local;

@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.p3pp3rf1y.sophisticatedcore.upgrades.IUpgradeItem;
 
+@SuppressWarnings("null")
 public final class SophisticatedToolItemHandler implements IItemHandlerModifiable {
     private final Inventory inventory;
     private final int toolSlot;

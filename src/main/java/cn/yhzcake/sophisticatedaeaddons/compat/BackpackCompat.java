@@ -21,6 +21,7 @@ import java.util.UUID;
  * Safe bridge to Sophisticated Backpacks API.
  * All calls are guarded by {@link #isLoaded()}.
  */
+@SuppressWarnings("null")
 public final class BackpackCompat {
 
     public static boolean isLoaded() {

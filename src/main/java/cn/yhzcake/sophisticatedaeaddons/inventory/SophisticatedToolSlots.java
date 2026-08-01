@@ -8,6 +8,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 
 import java.util.List;
 
+@SuppressWarnings("null")
 public final class SophisticatedToolSlots {
     public static final int X = -67;
     public static final int Y = 18;

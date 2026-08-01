@@ -49,6 +49,7 @@ public abstract class MixinNetworkStorage {
         CallbackInfoReturnable<Long> cir
     ) {
         long stored = 0;
+        @SuppressWarnings("null")
         boolean requiresSnapshot = priorityInventory.values().stream()
             .flatMap(List::stream)
             .filter(ConditionalPriorityStorage.class::isInstance)

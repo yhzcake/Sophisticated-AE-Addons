@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
+@SuppressWarnings("null")
 public final class SophisticatedBackpackInterfaceBlockEntity extends BlockEntity {
     @Nullable
     private UUID boundBackpackUuid;

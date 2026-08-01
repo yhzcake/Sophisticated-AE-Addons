@@ -8,6 +8,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
+@SuppressWarnings("null")
 public record UpgradeToolContents(NonNullList<ItemStack> items) {
     public static final int SLOTS = 9;
 

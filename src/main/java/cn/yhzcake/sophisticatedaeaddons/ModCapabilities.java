@@ -3,9 +3,9 @@ package cn.yhzcake.sophisticatedaeaddons;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+@SuppressWarnings("null")
 public final class ModCapabilities {
     private static final ItemStackHandler EMPTY = new ItemStackHandler(0);
 

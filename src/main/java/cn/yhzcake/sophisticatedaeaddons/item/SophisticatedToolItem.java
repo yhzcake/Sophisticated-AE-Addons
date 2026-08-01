@@ -1,7 +1,6 @@
 package cn.yhzcake.sophisticatedaeaddons.item;
 
 import cn.yhzcake.sophisticatedaeaddons.ModDataComponents;
-import cn.yhzcake.sophisticatedaeaddons.ModItems;
 import cn.yhzcake.sophisticatedaeaddons.UpgradeToolContents;
 import cn.yhzcake.sophisticatedaeaddons.UpgradeToolMenu;
 import net.minecraft.network.chat.Component;
@@ -14,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+@SuppressWarnings("null")
 public final class SophisticatedToolItem extends Item {
     private static final Component TITLE = Component.translatable("container.sophisticated_ae_addons.upgrade_tool");
 

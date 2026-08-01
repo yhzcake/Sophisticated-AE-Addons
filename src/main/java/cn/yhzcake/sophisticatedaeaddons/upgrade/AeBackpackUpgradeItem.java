@@ -11,6 +11,7 @@ import net.p3pp3rf1y.sophisticatedcore.upgrades.UpgradeType;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("null")
 public final class AeBackpackUpgradeItem extends Item implements IUpgradeItem<AeBackpackUpgradeWrapper> {
     private static final UpgradeType<AeBackpackUpgradeWrapper> TYPE = new UpgradeType<>(AeBackpackUpgradeWrapper::new);
 

@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("null")
 public final class PlayerInterfaceBlock extends BaseEntityBlock {
     public static final MapCodec<PlayerInterfaceBlock> CODEC = simpleCodec(PlayerInterfaceBlock::new);
 

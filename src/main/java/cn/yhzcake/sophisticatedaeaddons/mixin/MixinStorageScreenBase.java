@@ -51,6 +51,7 @@ public abstract class MixinStorageScreenBase {
         }
     }
 
+    @SuppressWarnings("null")
     @Inject(
         method = "renderSuper(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
         at = @At(

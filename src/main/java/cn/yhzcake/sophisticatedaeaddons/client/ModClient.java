@@ -7,6 +7,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
+@SuppressWarnings("null")
 @Mod(value = "sophisticated_ae_addons", dist = Dist.CLIENT)
 public final class ModClient {
     static {

@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
+@SuppressWarnings("null")
 public final class SophisticatedBackpackInterfaceBlock extends BaseEntityBlock {
     public static final MapCodec<SophisticatedBackpackInterfaceBlock> CODEC = simpleCodec(SophisticatedBackpackInterfaceBlock::new);
 

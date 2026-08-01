@@ -12,6 +12,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 
+@SuppressWarnings("null")
 @Mod(SophisticatedAEAddons.MOD_ID)
 public final class SophisticatedAEAddons {
     public static final String MOD_ID = "sophisticated_ae_addons";

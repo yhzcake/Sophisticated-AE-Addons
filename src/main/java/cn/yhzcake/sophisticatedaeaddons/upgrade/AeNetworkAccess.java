@@ -17,6 +17,7 @@ import net.p3pp3rf1y.sophisticatedcore.upgrades.IUpgradeWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("null")
 public final class AeNetworkAccess {
     private AeNetworkAccess() {
     }
@@ -101,7 +102,7 @@ public final class AeNetworkAccess {
             return null;
         }
         ServerLevel level = server.getLevel(target.dimension());
-        if (level == null || !level.hasChunkAt(target.pos())) {
+        if (level == null || !level.isAreaLoaded(target.pos(), 0)) {
             return null;
         }
         if (!(level.getBlockEntity(target.pos()) instanceof IWirelessAccessPoint accessPoint)

@@ -7,6 +7,7 @@ import net.p3pp3rf1y.sophisticatedcore.upgrades.IUpgradeWrapper;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("null")
 public final class AeStorageUpgradeWrapper implements IUpgradeWrapper {
     private final IStorageWrapper storageWrapper;
     private final ItemStack upgradeStack;

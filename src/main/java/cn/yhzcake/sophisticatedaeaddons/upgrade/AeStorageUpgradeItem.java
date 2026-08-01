@@ -11,6 +11,7 @@ import net.p3pp3rf1y.sophisticatedcore.upgrades.UpgradeType;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("null")
 public final class AeStorageUpgradeItem extends Item implements IUpgradeItem<AeStorageUpgradeWrapper> {
     private static final UpgradeType<AeStorageUpgradeWrapper> TYPE = new UpgradeType<>(AeStorageUpgradeWrapper::new);
 

@@ -4,6 +4,7 @@ import cn.yhzcake.sophisticatedaeaddons.network.SetPriorityConditionValuePayload
 import cn.yhzcake.sophisticatedaeaddons.network.SyncPriorityConditionsPayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
+@SuppressWarnings("null")
 public final class ModNetwork {
     private ModNetwork() {
     }

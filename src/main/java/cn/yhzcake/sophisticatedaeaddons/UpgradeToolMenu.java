@@ -1,6 +1,5 @@
 package cn.yhzcake.sophisticatedaeaddons;
 
-import cn.yhzcake.sophisticatedaeaddons.item.SophisticatedToolItem;
 import cn.yhzcake.sophisticatedaeaddons.inventory.SophisticatedToolItemHandler;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.p3pp3rf1y.sophisticatedcore.upgrades.IUpgradeItem;
 
+@SuppressWarnings("null")
 public final class UpgradeToolMenu extends AbstractContainerMenu {
     private static final int UPGRADE_SLOTS = UpgradeToolContents.SLOTS;
     private final int toolSlot;

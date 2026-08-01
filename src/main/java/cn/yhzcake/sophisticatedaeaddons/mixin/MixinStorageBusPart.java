@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+@SuppressWarnings("null,unused")
 @Mixin(value = StorageBusPart.class, remap = false)
 public abstract class MixinStorageBusPart {
     private boolean sophisticatedAeAddons$migrating;
@@ -47,6 +48,7 @@ public abstract class MixinStorageBusPart {
         mounts.mount(new ExtractionStorage(storage), priority);
     }
 
+    @SuppressWarnings("null")
     private PriorityConditions sophisticatedAeAddons$getConditions() {
         StorageBusPart self = (StorageBusPart) (Object) this;
         for (int i = 0; i < self.getUpgrades().size(); i++) {
@@ -120,6 +122,7 @@ public abstract class MixinStorageBusPart {
         return low;
     }
 
+    @SuppressWarnings("unused")
     private long sophisticatedAeAddons$allowedAmount(
         MEStorage storage,
         PriorityConditions conditions,

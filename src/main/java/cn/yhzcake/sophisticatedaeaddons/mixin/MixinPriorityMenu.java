@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("null")
 @Mixin(value = PriorityMenu.class, remap = false)
 public abstract class MixinPriorityMenu implements PrecisePriorityMenuExtension {
     @Unique

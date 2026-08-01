@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Unique;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("null")
 @Mixin(value = PriorityScreen.class, remap = false)
 public abstract class MixinPriorityScreen implements PrecisePriorityScreenExtension {
     @Unique

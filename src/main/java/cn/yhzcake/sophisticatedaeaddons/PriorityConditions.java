@@ -14,6 +14,7 @@ import java.util.List;
  * Holds the list of priority conditions for the Precise Priority Card.
  * Stored as a data component on the card item.
  */
+@SuppressWarnings("null")
 public record PriorityConditions(List<PriorityCondition> conditions, MigrationMode migrationMode) {
     public static final PriorityConditions EMPTY = new PriorityConditions(List.of(PriorityCondition.DEFAULT), MigrationMode.OFF);
 
