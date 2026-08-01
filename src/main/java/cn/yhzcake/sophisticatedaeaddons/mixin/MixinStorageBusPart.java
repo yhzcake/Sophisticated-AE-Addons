@@ -215,69 +215,6 @@ public abstract class MixinStorageBusPart {
         }
     }
 
-    private void sophisticatedAeAddons$migratePartially(MEStorage storage, AEKey key, IActionSource source) {
-        if (sophisticatedAeAddons$migrating) {
-            return;
-        }
-        StorageBusPart self = (StorageBusPart) (Object) this;
-        var grid = self.getMainNode().getGrid();
-        if (grid == null) {
-            return;
-        }
-        long stored = sophisticatedAeAddons$getStoredAmount(storage, key);
-        if (stored <= 0) {
-            return;
-        }
-        sophisticatedAeAddons$migrating = true;
-        sophisticatedAeAddons$blockedKey = key;
-        try {
-            long extractable = storage.extract(key, stored, Actionable.SIMULATE, source);
-            if (extractable <= 0 || !MigrationRoutingContext.begin()) {
-                return;
-            }
-            long insertable;
-            try {
-                insertable = grid.getStorageService().getInventory().insert(
-                    key,
-                    extractable,
-                    Actionable.SIMULATE,
-                    source
-                );
-            } finally {
-                MigrationRoutingContext.end();
-            }
-            long toMigrate = Math.min(extractable, insertable);
-            if (toMigrate <= 0) {
-                return;
-            }
-            long extracted = storage.extract(key, toMigrate, Actionable.MODULATE, source);
-            if (extracted <= 0) {
-                return;
-            }
-            if (!MigrationRoutingContext.begin()) {
-                sophisticatedAeAddons$restoreExtracted(storage, key, extracted, source);
-                return;
-            }
-            long inserted;
-            try {
-                inserted = grid.getStorageService().getInventory().insert(
-                    key,
-                    extracted,
-                    Actionable.MODULATE,
-                    source
-                );
-            } finally {
-                MigrationRoutingContext.end();
-            }
-            if (inserted < extracted) {
-                sophisticatedAeAddons$restoreExtracted(storage, key, extracted - inserted, source);
-            }
-        } finally {
-            sophisticatedAeAddons$blockedKey = null;
-            sophisticatedAeAddons$migrating = false;
-        }
-    }
-
     private void sophisticatedAeAddons$restoreExtracted(
         MEStorage storage,
         AEKey key,
@@ -300,7 +237,6 @@ public abstract class MixinStorageBusPart {
 
     private final class ConditionalStorage implements MEStorage, ConditionalPriorityStorage {
         private final MEStorage delegate;
-        private boolean sophisticatedAeAddons$rejectedBySimulate;
 
         private ConditionalStorage(MEStorage delegate) {
             this.delegate = delegate;
@@ -337,11 +273,7 @@ public abstract class MixinStorageBusPart {
             );
             if (mode == Actionable.SIMULATE) {
                 if (conditionMatches) {
-                    sophisticatedAeAddons$rejectedBySimulate = false;
                     return Math.min(amount, physicalLimit);
-                }
-                if (conditions.migrationMode() != PriorityConditions.MigrationMode.OFF) {
-                    sophisticatedAeAddons$rejectedBySimulate = true;
                 }
                 if (conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE
                     && !sophisticatedAeAddons$canMigrate(delegate, what, source)) {
@@ -349,12 +281,10 @@ public abstract class MixinStorageBusPart {
                 }
                 return 0;
             }
-            boolean mustReject = sophisticatedAeAddons$rejectedBySimulate
-                && conditions.migrationMode() != PriorityConditions.MigrationMode.OFF;
-            if (!mustReject && conditionMatches) {
+            if (conditionMatches) {
                 return delegate.insert(what, amount, mode, source);
             }
-            if (mustReject && conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE) {
+            if (conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE) {
                 boolean migrated = sophisticatedAeAddons$migrate(delegate, what, source);
                 if (!migrated) {
                     NetworkInsertionContext.blockFallback(what);

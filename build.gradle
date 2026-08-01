@@ -41,6 +41,7 @@ neoForge {
 
 dependencies {
     implementation "org.appliedenergistics:appliedenergistics2:${project.ae2_version}"
+    implementation "io.github.llamalad7:mixinextras-neoforge:0.4.1"
     implementation "maven.modrinth:sophisticated-core:${project.sophisticated_core_version}"
     implementation "maven.modrinth:sophisticated-backpacks:${project.sophisticated_backpacks_version}"
     implementation "maven.modrinth:sophisticated-storage:${project.sophisticated_storage_version}"
@@ -70,4 +71,3 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
-

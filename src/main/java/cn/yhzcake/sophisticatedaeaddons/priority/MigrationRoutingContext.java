@@ -24,6 +24,11 @@ public final class MigrationRoutingContext {
         return true;
     }
 
+    public static boolean isNetworkRouting() {
+        State state = STATE.get();
+        return state != null && state.routing;
+    }
+
     public static void exitNetworkRouting() {
         State state = STATE.get();
         if (state != null) {

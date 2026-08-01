@@ -4,13 +4,23 @@ import appeng.api.stacks.AEKey;
 
 public final class NetworkInsertionContext {
     private static final ThreadLocal<State> STATE = new ThreadLocal<>();
+    private static final ThreadLocal<Integer> DEPTH = ThreadLocal.withInitial(() -> 0);
 
     public static void begin(AEKey key, long stored, long requested) {
-        STATE.set(new State(key, stored, requested));
+        if (STATE.get() == null) {
+            STATE.set(new State(key, stored, requested));
+        }
+        DEPTH.set(DEPTH.get() + 1);
     }
 
     public static void end() {
-        STATE.remove();
+        int depth = DEPTH.get() - 1;
+        if (depth <= 0) {
+            DEPTH.remove();
+            STATE.remove();
+        } else {
+            DEPTH.set(depth);
+        }
     }
 
     public static long stored(AEKey key, long fallback) {
