@@ -1,0 +1,22 @@
+{
+  "itemGroup.sophisticated_ae_addons": "Sophisticated AE Addons",
+  "block.sophisticated_ae_addons.player_interface": "Player Interface",
+  "block.sophisticated_ae_addons.sophisticated_backpack_interface": "Sophisticated Backpack Interface",
+  "item.sophisticated_ae_addons.sophisticated_tool": "Sophisticated Tool",
+  "item.sophisticated_ae_addons.ae_backpack_upgrade": "AE Backpack Upgrade",
+  "item.sophisticated_ae_addons.ae_storage_upgrade": "AE Storage Upgrade",
+  "item.sophisticated_ae_addons.precise_priority_card": "Precise Priority Card",
+  "container.sophisticated_ae_addons.upgrade_tool": "Sophisticated Tool",
+  "message.sophisticated_ae_addons.player_bound": "Bound to current player",
+  "message.sophisticated_ae_addons.backpack_bound": "Backpack bound",
+  "message.sophisticated_ae_addons.backpack_unbound": "Binding cleared",
+  "gui.sophisticated_ae_addons.priority_conditions": "Precise Priority Conditions",
+  "gui.sophisticated_ae_addons.stack": "Stack",
+  "gui.sophisticated_ae_addons.count": "Count",
+  "gui.sophisticated_ae_addons.not": "NOT",
+  "gui.sophisticated_ae_addons.not_negated": "NOT Off",
+  "gui.sophisticated_ae_addons.negated": "NOT On",
+  "gui.sophisticated_ae_addons.migration.off": "Migration: Off",
+  "gui.sophisticated_ae_addons.migration.on": "Migration: On",
+  "gui.sophisticated_ae_addons.migration.force": "Migration: Force"
+}

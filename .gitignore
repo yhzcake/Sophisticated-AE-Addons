@@ -1,0 +1,49 @@
+# Gradle
+.gradle/
+build/
+out/
+build/*
+gradle/*
+
+# Minecraft development runtime
+run/
+runs/
+
+# Debug artifacts
+.dbg/
+debug-*.md
+*.log
+crash-reports/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.factorypath
+
+# Java
+*.class
+hs_err_pid*
+replay_pid*
+
+# Operating system
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Local environment
+.env
+.env.*
+!.env.example

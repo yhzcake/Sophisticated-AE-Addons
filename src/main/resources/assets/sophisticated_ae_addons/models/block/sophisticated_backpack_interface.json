@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sophisticated_ae_addons:block/sophisticated_backpack_interface"
+  }
+}
