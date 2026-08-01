@@ -13,6 +13,7 @@ import cn.yhzcake.sophisticatedaeaddons.PriorityConditions;
 import cn.yhzcake.sophisticatedaeaddons.priority.ConditionalPriorityStorage;
 import cn.yhzcake.sophisticatedaeaddons.priority.MigrationRoutingContext;
 import cn.yhzcake.sophisticatedaeaddons.priority.NetworkInsertionContext;
+import cn.yhzcake.sophisticatedaeaddons.priority.PriorityCondition;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -69,26 +70,12 @@ public abstract class MixinStorageBusPart {
         return counter.get(key);
     }
 
-    private long sophisticatedAeAddons$getNetworkStoredAmount(AEKey key) {
-        StorageBusPart self = (StorageBusPart) (Object) this;
-        var grid = self.getMainNode().getGrid();
-        return grid == null ? 0 : grid.getStorageService().getInventory().getAvailableStacks().get(key);
-    }
-
     private long sophisticatedAeAddons$getConditionStoredAmount(
         MEStorage storage,
         PriorityConditions conditions,
         AEKey key
     ) {
-        long localStored = sophisticatedAeAddons$getStoredAmount(storage, key);
-        if (conditions.migrationMode() == PriorityConditions.MigrationMode.OFF) {
-            return localStored;
-        }
-        long networkStored = NetworkInsertionContext.stored(
-            key,
-            sophisticatedAeAddons$getNetworkStoredAmount(key)
-        );
-        return Math.max(localStored, networkStored);
+        return sophisticatedAeAddons$getStoredAmount(storage, key);
     }
 
     private long sophisticatedAeAddons$allowedAmount(
@@ -106,20 +93,27 @@ public abstract class MixinStorageBusPart {
         if (physicalLimit <= 0) {
             return 0;
         }
-        if (conditions.test(key, sophisticatedAeAddons$saturatedAdd(stored, physicalLimit))) {
-            return physicalLimit;
-        }
-        long low = 0;
-        long high = physicalLimit;
-        while (low + 1 < high) {
-            long middle = low + (high - low) / 2;
-            if (conditions.test(key, sophisticatedAeAddons$saturatedAdd(stored, middle))) {
-                low = middle;
-            } else {
-                high = middle;
+        long allowed = conditions.test(key, sophisticatedAeAddons$saturatedAdd(stored, physicalLimit))
+            ? physicalLimit
+            : 0;
+        for (PriorityCondition condition : conditions.conditions()) {
+            if (condition.comparisonType() != PriorityCondition.ComparisonType.COUNT) {
+                continue;
+            }
+            long transition = condition.value() <= stored ? 0 : condition.value() - stored;
+            for (long candidate : new long[] {
+                transition > 0 ? transition - 1 : 0,
+                transition,
+                transition < Long.MAX_VALUE ? transition + 1 : Long.MAX_VALUE
+            }) {
+                long bounded = Math.min(candidate, physicalLimit);
+                if (bounded > allowed
+                    && conditions.test(key, sophisticatedAeAddons$saturatedAdd(stored, bounded))) {
+                    allowed = bounded;
+                }
             }
         }
-        return low;
+        return allowed;
     }
 
     @SuppressWarnings("unused")
@@ -255,9 +249,7 @@ public abstract class MixinStorageBusPart {
                 return delegate.insert(what, amount, mode, source);
             }
             long stored = sophisticatedAeAddons$getConditionStoredAmount(delegate, conditions, what);
-            long evaluatedAmount = conditions.migrationMode() == PriorityConditions.MigrationMode.OFF
-                ? amount
-                : NetworkInsertionContext.requested(what, amount);
+            long evaluatedAmount = amount;
             long allowed = sophisticatedAeAddons$allowedAmount(
                 delegate,
                 conditions,
@@ -278,19 +270,32 @@ public abstract class MixinStorageBusPart {
                 if (conditionMatches) {
                     return Math.min(amount, physicalLimit);
                 }
-                if (conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE
-                    && !sophisticatedAeAddons$canMigrate(delegate, what, source)) {
-                    NetworkInsertionContext.blockFallback(what);
+                if (MigrationRoutingContext.isNetworkRouting()) {
+                    return 0;
                 }
-                return 0;
+                boolean canMigrate = sophisticatedAeAddons$canMigrate(delegate, what, source);
+                if (canMigrate) {
+                    return Math.min(amount, physicalLimit);
+                }
+                if (conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE) {
+                    NetworkInsertionContext.blockFallback(what);
+                    return 0;
+                }
+                return Math.min(amount, allowed);
             }
             if (conditionMatches) {
                 return delegate.insert(what, amount, mode, source);
             }
-            if (conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE) {
+            if (!MigrationRoutingContext.isNetworkRouting()) {
                 boolean migrated = sophisticatedAeAddons$migrate(delegate, what, source);
-                if (!migrated) {
+                if (!migrated && conditions.migrationMode() == PriorityConditions.MigrationMode.FORCE) {
                     NetworkInsertionContext.blockFallback(what);
+                }
+                if (!migrated && conditions.migrationMode() == PriorityConditions.MigrationMode.ON) {
+                    return delegate.insert(what, Math.min(amount, allowed), mode, source);
+                }
+                if (migrated) {
+                    return 0;
                 }
             }
             return 0;
@@ -319,9 +324,7 @@ public abstract class MixinStorageBusPart {
 
         @Override
         public boolean sophisticatedAeAddons$requiresNetworkSnapshot() {
-            PriorityConditions conditions = sophisticatedAeAddons$getConditions();
-            return conditions != null
-                && conditions.migrationMode() != PriorityConditions.MigrationMode.OFF;
+            return false;
         }
 
         @Override

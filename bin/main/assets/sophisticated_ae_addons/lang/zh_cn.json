@@ -1,0 +1,22 @@
+{
+  "itemGroup.sophisticated_ae_addons": "精妙AE扩展",
+  "block.sophisticated_ae_addons.player_interface": "玩家接口",
+  "block.sophisticated_ae_addons.sophisticated_backpack_interface": "精妙背包接口",
+  "item.sophisticated_ae_addons.sophisticated_tool": "精妙工具",
+  "item.sophisticated_ae_addons.ae_backpack_upgrade": "AE背包升级",
+  "item.sophisticated_ae_addons.ae_storage_upgrade": "AE存储升级",
+  "item.sophisticated_ae_addons.precise_priority_card": "精确优先级卡",
+  "container.sophisticated_ae_addons.upgrade_tool": "精妙工具",
+  "message.sophisticated_ae_addons.player_bound": "已绑定当前玩家",
+  "message.sophisticated_ae_addons.backpack_bound": "已绑定精妙背包",
+  "message.sophisticated_ae_addons.backpack_unbound": "已解除绑定",
+  "gui.sophisticated_ae_addons.priority_conditions": "精确优先级条件",
+  "gui.sophisticated_ae_addons.stack": "堆叠",
+  "gui.sophisticated_ae_addons.count": "数量",
+  "gui.sophisticated_ae_addons.not": "取反",
+  "gui.sophisticated_ae_addons.not_negated": "未取反",
+  "gui.sophisticated_ae_addons.negated": "已取反",
+  "gui.sophisticated_ae_addons.migration.off": "迁移：关闭",
+  "gui.sophisticated_ae_addons.migration.on": "迁移：开启",
+  "gui.sophisticated_ae_addons.migration.force": "迁移：强制"
+}

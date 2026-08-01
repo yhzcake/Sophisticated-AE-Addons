@@ -20,7 +20,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.List;
 import java.util.NavigableMap;
 
@@ -32,6 +34,12 @@ public abstract class MixinNetworkStorage {
     @Shadow
     @Final
     private NavigableMap<Integer, List<MEStorage>> priorityInventory;
+
+    @Shadow
+    @Final
+    private List<MEStorage> secondPassInventories;
+
+    private final Deque<List<MEStorage>> sophisticatedAeAddons$secondPassStack = new ArrayDeque<>();
 
     @Shadow
     protected abstract void flushQueuedOperations();
@@ -88,6 +96,7 @@ public abstract class MixinNetworkStorage {
     )
     private boolean sophisticatedAeAddons$allowMigrationReentry(boolean mountsInUse) {
         if (mountsInUse && MigrationRoutingContext.enterNetworkRouting()) {
+            sophisticatedAeAddons$secondPassStack.push(new ArrayList<>(secondPassInventories));
             return false;
         }
         return mountsInUse;
@@ -106,6 +115,11 @@ public abstract class MixinNetworkStorage {
         CallbackInfoReturnable<Long> cir
     ) {
         if (MigrationRoutingContext.isNetworkRouting()) {
+            if (!sophisticatedAeAddons$secondPassStack.isEmpty()) {
+                List<MEStorage> outerSecondPass = sophisticatedAeAddons$secondPassStack.pop();
+                secondPassInventories.clear();
+                secondPassInventories.addAll(outerSecondPass);
+            }
             MigrationRoutingContext.exitNetworkRouting();
         }
     }
@@ -192,7 +206,8 @@ public abstract class MixinNetworkStorage {
         IActionSource source,
         Operation<Long> original
     ) {
-        if (NetworkInsertionContext.isFallbackBlocked(key)
+        if (!MigrationRoutingContext.isNetworkRouting()
+            && NetworkInsertionContext.isFallbackBlocked(key)
             && !(storage instanceof ConditionalPriorityStorage)) {
             return 0;
         }

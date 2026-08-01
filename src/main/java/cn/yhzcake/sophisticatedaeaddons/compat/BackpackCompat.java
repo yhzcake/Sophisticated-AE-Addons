@@ -53,7 +53,7 @@ public final class BackpackCompat {
 
         IBackpackWrapper indexedWrapper = BackpackWrapperIndex.find(uuid);
         if (indexedWrapper != null) {
-            return indexedWrapper.getInventoryForInputOutput();
+            return indexedWrapper.getInventoryHandler();
         }
 
         var accessLog = BackpackAccessLogger.getBackpackLog(uuid);
@@ -65,7 +65,7 @@ public final class BackpackCompat {
             wrapper.setColumnsTaken(log.getColumnsTaken(), false);
             wrapper.setContentsUuid(uuid);
             BackpackWrapperIndex.register(wrapper);
-            return wrapper.getInventoryForInputOutput();
+            return wrapper.getInventoryHandler();
         }
 
         // Search chunks around the interface
@@ -78,7 +78,7 @@ public final class BackpackCompat {
                 for (BlockEntity be : chunk.getBlockEntities().values()) {
                     if (be instanceof BackpackBlockEntity backpack) {
                         if (uuid.equals(backpack.getBackpackWrapper().getContentsUuid().orElse(null))) {
-                            return backpack.getBackpackWrapper().getInventoryForInputOutput();
+                            return backpack.getBackpackWrapper().getInventoryHandler();
                         }
                     }
                 }
@@ -112,7 +112,7 @@ public final class BackpackCompat {
         IBackpackWrapper wrapper = BackpackWrapper.fromStack(stack);
         BackpackWrapperIndex.register(wrapper);
         if (uuid.equals(wrapper.getContentsUuid().orElse(null))) {
-            return wrapper.getInventoryForInputOutput();
+            return wrapper.getInventoryHandler();
         }
         return null;
     }

@@ -1,0 +1,36 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "cn.yhzcake.sophisticatedaeaddons.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinAbstractContainerMenu",
+    "MixinBackpackWrapper",
+    "MixinInventoryHandler",
+    "MixinMEStorageMenu",
+    "MixinNetworkStorage",
+    "MixinPriorityMenu",
+    "MixinStorageBusPart",
+    "MixinStorageContainerMenuBase",
+    "MixinStorageWrapper",
+    "accessor.AbstractContainerMenuAccessor",
+    "accessor.SlotAccessor",
+    "accessor.StorageContainerMenuBaseAccessor",
+    "accessor.WidgetContainerAccessor"
+  ],
+  "client": [
+    "MixinAEBaseScreen",
+    "MixinMEStorageScreen",
+    "MixinPriorityScreen",
+    "MixinStorageScreenBase",
+    "accessor.AEBaseScreenAccessor",
+    "accessor.AbstractContainerScreenAccessor",
+    "accessor.ScreenAccessor"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "sophisticated_ae_addons.refmap.json"
+}
